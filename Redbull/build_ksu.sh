@@ -11,6 +11,9 @@ else
 	echo "Sources already downloaded"
 fi
 cd private/msm-google
+read -p "Do you need KSU? y or n: " KSU
+if [[ "$KSU" == "y" ]]; then
+echo "Including KSU"
 if grep -q "CONFIG_KPROBES=y" /home/diam/android-kernel/private/msm-google/arch/arm64/configs/redbull-gki_defconfig; then
 	echo "KSU by kprobes included"
 else
@@ -20,6 +23,10 @@ else
 	echo "CONFIG_HAVE_KPROBES=y" >>arch/arm64/configs/redbull-gki_defconfig
 	echo "CONFIG_KPROBE_EVENTS=y" >>arch/arm64/configs/redbull-gki_defconfig
 	echo "CONFIG_OVERLAY_FS=y" >>arch/arm64/configs/redbull-gki_defconfig
+elif [[ "$KSU" == "n" ]]; then
+echo "Doing nothing"
+else echo "Wrong answer"
+fi
 fi
 make ARCH=arm64 redbull-gki_defconfig
 make ARCH=arm64 savedefconfig
