@@ -25,7 +25,7 @@ else
 	echo "CONFIG_OVERLAY_FS=y" >>arch/arm64/configs/redbull-gki_defconfig
 elif [[ "$KSU" == "n" ]]; then
 echo "Doing nothing"
-else echo "Wrong answer"
+else echo "Doing nothing"
 fi
 fi
 make ARCH=arm64 redbull-gki_defconfig
