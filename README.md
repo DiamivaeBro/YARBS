@@ -16,9 +16,9 @@ What in planes?
 * Make more flexible settings
 * Add more avalible patches
 
-I'TS JUST FIRST ALPFA
+IT,S JUST FIRST ALPHA
 -------------
-Script realy not ideal and i need to rewrite some components,if you see bug please make issue
+Script really is not ideal and i need to rewrite some components.If you see any bugs, please report them on issues 
 
 How to use?
 -------------
@@ -93,4 +93,4 @@ Thanks to:
 - [KernelSU Action](https://github.com/xiaoleGun/KernelSU_Action) - Idea of this project
 - [KernelSU](https://github.com/tiann/KernelSU) - KernelSU realization
 - [Tiann](https://github.com/tiann) - KSU Patches
-
+- [AnyKernel3](https://github.com/osm0sis/AnyKernel3) - AnyKernel3 realization
