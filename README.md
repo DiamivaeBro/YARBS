@@ -44,7 +44,7 @@ Results you can found in "AnyKernel3" and "out" directories in $HOME/android-ker
 
 You can configure for what android version kernel you building, just change branch at script
 
-Also in releases you can find prebuilded by me redbull kernels that includes KSU
+Also in releases you can find prebuilded by me redbull kernels that includes KSU. A14 QPR1 ONLY
 -------------
 
 How to install?
