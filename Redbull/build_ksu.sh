@@ -14,7 +14,9 @@ cd private/msm-google
 read -p "Do you need KSU? y or n: " KSU
 if [[ "$KSU" == "y" ]]; then
 echo "Including KSU"
-if grep -q "CONFIG_KPROBES=y" /home/diam/android-kernel/private/msm-google/arch/arm64/configs/redbull-gki_defconfig; then
+read -p "What KSU method you need? kprobes or patch: " KSUMT
+if [[ "$KSUMT" == "kprobes" ]]; then
+if grep -q "CONFIG_KPROBES=y" private/msm-google/arch/arm64/configs/redbull-gki_defconfig; then
 	echo "KSU by kprobes included"
 else
 	echo "Including KSU kprobes method"
@@ -23,10 +25,15 @@ else
 	echo "CONFIG_HAVE_KPROBES=y" >>arch/arm64/configs/redbull-gki_defconfig
 	echo "CONFIG_KPROBE_EVENTS=y" >>arch/arm64/configs/redbull-gki_defconfig
 	echo "CONFIG_OVERLAY_FS=y" >>arch/arm64/configs/redbull-gki_defconfig
+fi
+elif [[ "$KSUMT" == "patch" ]]; then
+cd $HOME/private/msm-google
+source patches.sh ;
+else exit
+fi
 elif [[ "$KSU" == "n" ]]; then
 echo "Doing nothing"
 else echo "Doing nothing"
-fi
 fi
 make ARCH=arm64 redbull-gki_defconfig
 make ARCH=arm64 savedefconfig
@@ -46,7 +53,7 @@ fi
 if test -f $HOME/android-kernel/AnyKernel3; then
 	rm -rf "AnyKernel3"
 fi
-./build_redbull-gki.sh
+ source build_redbull-gki.sh
 ##Setup AnyKernel
 cd /home/runner/android-kernel
 git clone https://github.com/osm0sis/AnyKernel3.git
