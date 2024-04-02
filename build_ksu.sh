@@ -1,6 +1,7 @@
 #!/bin/bash
 echo 'Preparing packages'
 sudo apt-get update -y
+mkdir $HOME/android-kernel
 cd $HOME/android-kernel
 if ! test -f $HOME/android-kernel/private/msm-google/AndroidKernel.mk; then
 	echo "Downloading sources..."
@@ -28,7 +29,7 @@ else
 fi
 elif [[ "$KSUMT" == "patch" ]]; then
 cd $HOME/private/msm-google
-source patches.sh ;
+source $HOME/YARBS/patches.sh ;
 else exit
 fi
 elif [[ "$KSU" == "n" ]]; then
