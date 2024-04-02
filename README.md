@@ -16,7 +16,7 @@ What in planes?
 * Make more flexible settings
 * Add more avalible patches
 
-IT,S JUST FIRST ALPHA
+IT'S JUST FIRST ALPHA
 -------------
 Script really is not ideal and i need to rewrite some components.If you see any bugs, please report them on issues 
 
