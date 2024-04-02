@@ -6,8 +6,8 @@ cd $HOME/android-kernel
 if ! test -f $HOME/android-kernel/private/msm-google/AndroidKernel.mk; then
 	echo "Downloading sources..."
 	rm -rf "$HOME/.repo"
-	$HOME/.bin/repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-redbull-4.19-android14-qpr1
-	$HOME/.bin/repo sync
+	repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-redbull-4.19-android14-qpr1
+	repo sync
 else
 	echo "Sources already downloaded"
 fi
