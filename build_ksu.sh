@@ -12,29 +12,38 @@ else
 	echo "Sources already downloaded"
 fi
 cd private/msm-google
-read -p "Do you need KSU? y or n: " KSU
+read -p "Do you need KSU? y , n or Apatch: " KSU
 if [[ "$KSU" == "y" ]]; then
 echo "Including KSU"
 read -p "What KSU method you need? kprobes or patch: " KSUMT
 if [[ "$KSUMT" == "kprobes" ]]; then
-if grep -q "CONFIG_KPROBES=y" private/msm-google/arch/arm64/configs/redbull-gki_defconfig; then
+if grep -q "CONFIG_KPROBES=y" private/msm-google/arch/arm64/configs/redbull_defconfig; then
 	echo "KSU by kprobes included"
 else
 	echo "Including KSU kprobes method"
-	echo "CONFIG_MODULES=y" >>arch/arm64/configs/redbull-gki_defconfig
-	echo "CONFIG_KPROBES=y" >>arch/arm64/configs/redbull-gki_defconfig
-	echo "CONFIG_HAVE_KPROBES=y" >>arch/arm64/configs/redbull-gki_defconfig
-	echo "CONFIG_KPROBE_EVENTS=y" >>arch/arm64/configs/redbull-gki_defconfig
-	echo "CONFIG_OVERLAY_FS=y" >>arch/arm64/configs/redbull-gki_defconfig
+	echo "CONFIG_MODULES=y" >>arch/arm64/configs/redbull_defconfig
+	echo "CONFIG_KPROBES=y" >>arch/arm64/configs/redbull_defconfig
+	echo "CONFIG_HAVE_KPROBES=y" >>arch/arm64/configs/redbull_defconfig
+	echo "CONFIG_KPROBE_EVENTS=y" >>arch/arm64/configs/redbull_defconfig
+	echo "CONFIG_OVERLAY_FS=y" >>arch/arm64/configs/redbull_defconfig
 fi
 elif [[ "$KSUMT" == "patch" ]]; then
 cd $HOME/private/msm-google
+echo "CONFIG_KSU=y" >> arch/arm64/configs/redbull_defconfig
 source $HOME/YARBS/patches.sh ;
 else exit
-fi
 elif [[ "$KSU" == "n" ]]; then
 echo "Doing nothing"
+elif [["$KSU" == "Apatch"]]
+if grep -q "CONFIG_KALLSYMS=y" private/msm-google/arch/arm64/configs/redbull_defconfig; then
+echo "Apatch fixes included"
+else
+echo "" >> arch/arm64/configs/redbull_defconfig
+echo "" >> arch/arm64/configs/redbull_defconfig
+echo "Added Apatch support"
+fi
 else echo "Doing nothing"
+fi
 fi
 make ARCH=arm64 redbull-gki_defconfig
 make ARCH=arm64 savedefconfig
