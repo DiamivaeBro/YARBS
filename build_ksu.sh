@@ -31,10 +31,9 @@ elif [[ "$KSUMT" == "patch" ]]; then
 cd $HOME/private/msm-google
 echo "CONFIG_KSU=y" >> arch/arm64/configs/redbull_defconfig
 source $HOME/YARBS/patches.sh ;
-else exit
 elif [[ "$KSU" == "n" ]]; then
 echo "Doing nothing"
-elif [["$KSU" == "Apatch"]]
+elif [[ "$KSU" == "Apatch" ]]; then
 if grep -q "CONFIG_KALLSYMS=y" private/msm-google/arch/arm64/configs/redbull_defconfig; then
 echo "Apatch fixes included"
 else
@@ -63,7 +62,7 @@ fi
 if test -f $HOME/android-kernel/AnyKernel3; then
 	rm -rf "AnyKernel3"
 fi
- source build_redbull-gki.sh
+ source build_redbull.sh
 ##Setup AnyKernel
 cd /home/runner/android-kernel
 git clone https://github.com/osm0sis/AnyKernel3.git
