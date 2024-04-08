@@ -22,6 +22,7 @@ select_kernel_patch() {
 		merge_apatch
 		echo "Including Apatch"
 	elif [[ "$KPATCH_TYPE" == "none" ]]; then
+	cd $SOURCE_KERNEL_DIR
 		echo "Building without patches"
 	else
 		select_kernel_patch
@@ -145,6 +146,7 @@ custom_kernel_merge() {
 	read -p "Enter branch name: " KBRANCH
 	git remote add lk $KGIT
 	git fetch lk
+	git commit
 	git merge lk/$KBRANCH
 	cd $KERNEL_DIR
 }
