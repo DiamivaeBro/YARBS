@@ -3,7 +3,6 @@
 KERNEL_DIR=$HOME/android-kernel
 SOURCE_KERNEL_DIR=${KERNEL_DIR}/private/msm-google
 DEVICE_DEFCONFIG=arch/arm64/configs/redbull_defconfig
-ARCH=arm64
 
 # Making functions
 change_dir() {
@@ -74,7 +73,7 @@ merge_ksu_kprobe() {
 
 merge_ksu_patch() {
 	echo "CONFIG_KSU=y" >>$DEVICE_DEFCONFIG
-	bash patches.sh
+	bash $HOME/YARBS/patches.sh
 }
 
 check_ksu_patch_type() {
@@ -123,6 +122,7 @@ check_kernel_patch() {
 
 update_system() {
 	sudo apt-get update -y
+	sudo apt-get install libssl-dev repo git systemtap gcc
 }
 
 download_kernel_sources() {
@@ -138,9 +138,9 @@ download_kernel_sources() {
 
 custom_kernel_merge() {
 	cd $SOURCE_KERNEL_DIR
-	git config --global user.email "local@github-example.com"
+	git config user.email "local@github-example.com"
 	git init
-	git config --global user.name "local-git"
+	git config user.name "local-git"
 	read -p "Enter link to sources: " KGIT
 	read -p "Enter branch name: " KBRANCH
 	git remote add lk $KGIT
@@ -168,7 +168,7 @@ save_defconfig() {
 }
 
 sources_clean() {
-	cd $HOME/android-kernel
+	cd $KERNEL_DIR
 	if [ -f $HOME/android-kernel/out ]; then
 		rm -rf "out"
 	fi
@@ -189,7 +189,8 @@ setup_anykernel_scripts() {
 	echo "All done.Check $HOME/android-kernel/AnyKernel"
 }
 
-mkdir android-kernel
+mkdir $KERNEL_DIR
+cd $KERNEL_DIR
 update_system
 change_dir
 download_kernel_sources
