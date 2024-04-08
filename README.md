@@ -6,7 +6,9 @@ Simple bash script for building android kernels!
 For now script can
 
 * Build standart kernel for Google Redbull family
-* Build standart kernel with KSU  (Patch and Kprobes methods)
+* Build custom kernel for Google Redbull family (initial support)
+* Build kernel with KSU  (Patch and Kprobes methods)
+* Build kernel with APatch fixes
 * Pack builded kernel into AnyKernel3
   
 What in planes?
@@ -16,7 +18,7 @@ What in planes?
 * Make more flexible settings
 * Add more avalible patches
 
-IT'S JUST FIRST ALPHA
+IT'S JUST ALPHA
 -------------
 Script really is not ideal and i need to rewrite some components.If you see any bugs, please report them on issues 
 
