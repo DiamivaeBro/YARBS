@@ -3,7 +3,7 @@
 KERNEL_DIR=$HOME/android-kernel
 SOURCE_KERNEL_DIR=${KERNEL_DIR}/private/msm-google
 DEVICE_DEFCONFIG=arch/arm64/configs/redbull_defconfig
-
+ARCH=arm64
 # Making functions
 change_dir() {
 	cd $KERNEL_DIR
@@ -22,7 +22,7 @@ select_kernel_patch() {
 		merge_apatch
 		echo "Including Apatch"
 	elif [[ "$KPATCH_TYPE" == "none" ]]; then
-	cd $SOURCE_KERNEL_DIR
+		cd $SOURCE_KERNEL_DIR
 		echo "Building without patches"
 	else
 		select_kernel_patch
@@ -132,22 +132,22 @@ download_kernel_sources() {
 		rm -rf "$KERNEL_DIR/.repo"
 		repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-redbull-4.19-android14-qpr1
 		repo sync -j $(nproc)
+		touch $SOURCE_KERNEL_DIR/stock
 	else
 		echo ""
 	fi
 }
 
 custom_kernel_merge() {
-	cd $SOURCE_KERNEL_DIR
-	git config user.email "local@github-example.com"
-	git init
-	git config user.name "local-git"
+	if [ -f msm-google/stock ]; then
+		mv msm-google msm-google_stock
+	else
+		echo ""
+	fi
+	cd $KERNEL_DIR/private
 	read -p "Enter link to sources: " KGIT
 	read -p "Enter branch name: " KBRANCH
-	git remote add lk $KGIT
-	git fetch lk
-	git commit
-	git merge lk/$KBRANCH
+	git clone "$KGIT" $SOURCE_KERNEL_DIR -b "$KBRANCH"
 	cd $KERNEL_DIR
 }
 
