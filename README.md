@@ -93,6 +93,7 @@ Thanks to:
 -------------
 - [QKIvan](https://github.com/QKIvan) - For main logic of YARBS i refered to his worklow files
 - [xiaoleGun](https://github.com/xiaoleGun) - Script for patch kernel sources to support KernelSU
+- [Riko](https://codeberg.org/mikromikro) - Code refactoring
 - [KernelSU Action](https://github.com/xiaoleGun/KernelSU_Action) - Idea of this project
 - [KernelSU](https://github.com/tiann/KernelSU) - KernelSU realization
 - [Tiann](https://github.com/tiann) - KSU Patches
