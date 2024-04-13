@@ -2,7 +2,7 @@
 # Preparing variables
 KERNEL_DIR=$HOME/android-kernel
 SOURCE_KERNEL_DIR=${KERNEL_DIR}/private/msm-google
-DEVICE_DEFCONFIG=arch/arm64/configs/redbull_defconfig
+DEVICE_DEFCONFIG=arch/arm64/configs/redbull-gki_defconfig
 ARCH=arm64
 # Making functions
 change_dir() {
@@ -102,8 +102,8 @@ merge_ksu() {
 }
 
 merge_apatch() {
-	echo "CONFIG_KALLSYMS=y" >>arch/arm64/configs/redbull_defconfig
-	echo "CONFIG_KALLSYMS_ALL=y" >>arch/arm64/configs/redbull_defconfig
+	echo "CONFIG_KALLSYMS=y" >>arch/arm64/configs/redbull-gki_defconfig
+	echo "CONFIG_KALLSYMS_ALL=y" >>arch/arm64/configs/redbull-gki_defconfig
 	echo "Added Apatch support"
 
 }
@@ -163,10 +163,10 @@ check_kernel_type() {
 }
 
 save_defconfig() {
-	make redbull_defconfig
+	make redbull-gki_defconfig
 	make ARCH=arm64 savedefconfig
 	make mrproper
-	cp defconfig arch/arm64/configs/redbull_defconfig
+	cp defconfig arch/arm64/configs/redbull-gki_defconfig
 }
 
 sources_clean() {
@@ -201,5 +201,5 @@ check_kernel_type
 select_kernel_patch
 save_defconfig
 sources_clean
-bash build_redbull.sh
+bash build_redbull-gki.sh
 setup_anykernel_scripts
