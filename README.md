@@ -11,7 +11,7 @@ For now script can
 * Build kernel with APatch fixes
 * Pack builded kernel into AnyKernel3
   
-What in planes?
+What in plans?
 -------------
 
 * Add support of build and patch kernels for most of android devices
