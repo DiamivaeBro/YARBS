@@ -31,7 +31,7 @@ debootstarpping () {
 
 sciptnrun () {
     echo "Now we run systemd-nspawn:"
-    systemd-nspawn -D /workdir /bin/bash -c 'export PATH="/usr/bin:$PATH"; mkdir -p /builddir echo "Acquiring script."; git clone "https://github.com/DiamivaeBro/YARBS /builddir";'
+    systemd-nspawn -D /workdir /bin/bash -c 'export PATH="/usr/bin:$PATH"; mkdir -p /builddir echo "Acquiring script."; git clone https://github.com/DiamivaeBro/YARBS;'
 }
 
 greetings
