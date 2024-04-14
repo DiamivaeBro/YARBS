@@ -26,18 +26,25 @@ workdir () {
 
 debootstarpping () {
     echo "Acquiring Base Ubuntu image."
-    debootstrap --arch=amd64 --no-check-gpg --no-check-certificate --include=git,systemd,systemd-container jammy /workdir http://mirror.yandex.ru/ubuntu/
+    debootstrap --arch=amd64 --no-check-certificate --no-check-gpg --include=git,systemd,systemd-container jammy /workdir http://mirror.yandex.ru/ubuntu/
 }
 
-sciptnrun () {
+cloning () {
+    mkdir -p /workdir/builddir
+    echo "Acquiring script."
+    cp ./* /workdir/builddir
+}
+
+nspawn () {
     echo "Now we run systemd-nspawn:"
-    systemd-nspawn -D /workdir /bin/bash -c 'export PATH="/usr/bin:$PATH"; mkdir -p /builddir; echo "Acquiring script."; cd /builddir; git clone https://github.com/DiamivaeBro/YARBS;'
+    systemd-nspawn -D /workdir /bin/bash -c 'export PATH="/usr/bin:$PATH"; bash build_ksu.sh'
+    umount -l /workdir
 }
 
 greetings
 check
 workdir
 debootstarpping
-sciptnrun
-umount -l /workdir/*
+cloning
+nspawn
 echo "Done!"
