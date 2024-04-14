@@ -30,24 +30,14 @@ debootstarpping () {
 }
 
 sciptnrun () {
-    if [ -f /workdir/etc/os-release ]; then
-        echo "Now we run systemd-nspawn."
-        systemd-nspawn --read-only -D /workdir 
-        source /etc/profile
-        mkdir -p /builddir
-        echo "Acquiring script."
-        git clone "https://github.com/DiamivaeBro/YARB.git /workdir"
-        bash /builddir/YARBS/build_ksu.sh
-        exit
-    else
-        echo "An error occured! Retry pls."
-        exit 1
-    fi
+    echo "Now we run systemd-nspawn:"
+    systemd-nspawn -D /workdir /bin/bash -c 'export PATH="/usr/bin:$PATH"; mkdir -p /builddir' echo "Acquiring script."; git clone "https://github.com/DiamivaeBro/YARBS /builddir";'
 }
 
+greetings
 check
 workdir
 debootstarpping
 sciptnrun
-umount /workdir/*
+umount -l /workdir/*
 echo "Done!"
