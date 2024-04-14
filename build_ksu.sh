@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Preparing variables
-KERNEL_DIR=$HOME/android-kernel
+BUILD_HOME=$HOME/builddir
+KERNEL_DIR=$BUILD_HOME/android-kernel
 SOURCE_KERNEL_DIR=${KERNEL_DIR}/private/msm-google
 DEVICE_DEFCONFIG=arch/arm64/configs/redbull-gki_defconfig
 ARCH=arm64
@@ -74,7 +75,7 @@ merge_ksu_kprobe() {
 
 merge_ksu_patch() {
 	echo "CONFIG_KSU=y" >>$DEVICE_DEFCONFIG
-	bash $HOME/YARBS/patches.sh
+	bash $BUILD_HOME/YARBS/patches.sh
 }
 
 check_ksu_patch_type() {
@@ -171,10 +172,10 @@ save_defconfig() {
 
 sources_clean() {
 	cd $KERNEL_DIR
-	if [ -f $HOME/android-kernel/out ]; then
+	if [ -f $KERNEL_DIR/out ]; then
 		rm -rf "out"
 	fi
-	if [ -f $HOME/android-kernel/AnyKernel3 ]; then
+	if [ -f $KERNEL_DIR/AnyKernel3 ]; then
 		rm -rf "AnyKernel3"
 	fi
 }
@@ -185,12 +186,13 @@ setup_anykernel_scripts() {
 	sed -i 's/do.devicecheck=1/do.devicecheck=0/g' AnyKernel3/anykernel.sh
 	sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' AnyKernel3/anykernel.sh
 	sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' AnyKernel3/anykernel.sh
-	cp $HOME/android-kernel/out/android-msm-pixel-4.19/dist/Image.lz4-dtb AnyKernel3/
+	cp $BUILD_HOME/android-kernel/out/android-msm-pixel-4.19/dist/Image.lz4-dtb AnyKernel3/
 	cd ./AnyKernel3/
 	zip -r AnyKernel3 . -x ".git*" -x "README.md" -x "*.zip"
-	echo "All done.Check $HOME/android-kernel/AnyKernel"
+	echo "All done.Check $BUILD_HOME/android-kernel/AnyKernel"
 }
 
+mkdir $HOME/builddir
 mkdir $KERNEL_DIR
 cd $KERNEL_DIR
 update_system
