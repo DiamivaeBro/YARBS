@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 greetings () {
-    echo -e "\033[31m YY      YY   AAAAA      RRRRRR     BBBB         SSSS  \033[0m"
-    echo -e "\033[31m   YY  YY     AA  AA     RR    RR   BB  BB     SS     S\033[0m"
-    echo -e "\033[31m     YY       AA   AA    RRRRRR     BBBB          SS   \033[0m"
-    echo -e "\033[31m     YY       AAAAAAAA   RR   RR    BB  BB     S    SS \033[0m"
-    echo -e "\033[31m     YY       AA     AA  RR     RR  BBBBBB      SSSS   \033[0m"
+    echo -e "\033[31m YY      YY   AAAAA      RRRRRR     BBBB         SSSS \033[0m"
+    echo -e "\033[31m   YY  YY     AA  AA     RR    RR   BB  BB     SS    S\033[0m"
+    echo -e "\033[31m     YY       AA   AA    RRRRRR     BBBB          SS  \033[0m"
+    echo -e "\033[31m     YY       AAAAAAAA   RR   RR    BB  BB     S    SS\033[0m"
+    echo -e "\033[31m     YY       AA     AA  RR     RR  BBBBBB      SSSS  \033[0m"
     sleep 3;
 }
 
