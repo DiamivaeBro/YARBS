@@ -49,7 +49,11 @@ You can configure for what android version kernel you building, just change bran
 Also in releases you can find prebuilded by me redbull kernels that includes KSU. A14 QPR1 ONLY
 -------------
 
-How to install?
+<h2> Quick deploy </h2>
+
+You need `debootstrap` and OS with systemd to use `quick-deploy.sh`
+
+<h2> How to install? </h2>
 
 Download latest kernel form releases (boot.img for stock,AnyKernel3 for custom roms)
 
