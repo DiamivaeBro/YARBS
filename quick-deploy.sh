@@ -49,5 +49,5 @@ check
 workdir
 debootstarpping
 sciptnrun
-umount /workdir
+umount /workdir/*
 echo "Done!"
