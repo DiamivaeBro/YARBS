@@ -1,6 +1,6 @@
 ## Yet Another Redbull Build Script (YARBS)
 
-Simple bash script for building android kernels!
+Simple bash script for building android kernel!
 
 For now script can
 
@@ -18,7 +18,7 @@ For now script can
 
 ## IT'S JUST ALPHA
 
-Script really is not ideal and i need to rewrite some components.If you see any bugs, please report them on issues
+Script really is not ideal and i need to rewrite some components. If you see any bugs, please report them on issues
 
 ## How to use?
 
@@ -52,7 +52,7 @@ You can configure for what android version kernel you building, just change bran
 
 How to install?
 
-Download latest kernel form releases (boot.img for stock,AnyKernel3 for custom roms)
+Download latest kernel form releases (boot.img for stock, AnyKernel3 for custom roms)
 
 1. For stock ROM
 
@@ -72,7 +72,7 @@ fastboot flash boot boot.img
 
 Congratulations! All might be okay
 
-2. For custom ROM (Tested with LinageOs 21 may not work on others)
+2. For custom ROM (Tested with LineageOS 21 may not work on others)
 
 2.1. Reboot to recovery
 
