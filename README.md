@@ -14,10 +14,12 @@
     * Make more flexible settings
     * Add more avalible patches
 <br>
-
-## IT'S JUST ALPHA
-
-Script really is not ideal and i need to rewrite some components. If you see any bugs, please report them on issues
+<h1 align="center">⚠️ WE NOT RESPONSIBLE IF DEVICE BRICK OR BROKE. PROCEED AT YOUR OWN RISK.⚠️</h1>
+<h3>THIS SCRIPT IS IN EARLY TESTING AND MAY CAUSE DAMAGE TO YOUR DEVICE IF USED INAPPROPRIATE. CONSIDER ALL RISKS AND USE IT AT YOUR FULL RESPONSE.</h3>
+<h3>DO NOT OPEN NEW ISSUE IF YOU HAVE BRICKED DEVICE.</h3>
+<br>
+<br>
+<br>
 
 ## Setting up your machine
 
