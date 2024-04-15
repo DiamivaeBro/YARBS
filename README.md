@@ -109,6 +109,7 @@ Congratulations! All might be okay
 
 ## Thanks to:
 
+- [AOSPA](https://github.com/AOSPA/manifest/blob/uvite/README.md) - for base README.
 - [QKIvan](https://github.com/QKIvan) - For main logic of YARBS i refered to his worklow files
 - [xiaoleGun](https://github.com/xiaoleGun) - Script for patch kernel sources to support KernelSU
 - [Riko](https://codeberg.org/mikromikro) - Code refactoring
