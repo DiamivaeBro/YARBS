@@ -1,7 +1,6 @@
 <p align="center"><img src=https://github.com/DiamivaeBro/YARBS/assets/117505144/52106683-6a10-4f84-b26d-c10c627794d2></p>
 <h1 align="center">Yet Another Redbull Build Script (YARBS) 🦊</h1>
 <h3 align="center">Simple Bash Script for build Android Kernel!</h3>
-
 <br>
 <h2 align="center">▶️ Script features:</h2>
   * Build standart kernel for Google Redbull family
