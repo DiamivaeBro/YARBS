@@ -72,7 +72,7 @@ fastboot flash boot boot.img
 
 Congratulations! All might be okay
 
-2. For custom ROM (Tested with LineageOS 21 may not work on others)
+2. For custom ROM (Tested with LineageOS(https://github.com/LineageOS) 21 may not work on others)
 
 2.1. Reboot to recovery
 
