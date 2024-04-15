@@ -36,7 +36,7 @@ Google recommends using Ubuntu.
 ```bash
 sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
 sudo chmod a+rx /usr/local/bin/repo
-sudo apt-get install -y curl bs flexgit
+sudo apt-get install -y curl bc flex bison git cmake build-essential 
 ```
 
 <h2>Clone this repo to the home directory</h2>
