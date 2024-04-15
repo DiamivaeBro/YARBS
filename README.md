@@ -1,4 +1,4 @@
-<p align="center"><img src=https://github.com/DiamivaeBro/YARBS/assets/117505144/52106683-6a10-4f84-b26d-c10c627794d2></p>
+![image](https://github.com/DiamivaeBro/YARBS/assets/117505144/b07a9f26-8ec3-414a-a346-82e606548843)<p align="center"><img src=https://github.com/DiamivaeBro/YARBS/assets/117505144/52106683-6a10-4f84-b26d-c10c627794d2></p>
 <h1 align="center">Yet Another Redbull Build Script (YARBS) 🦊</h1>
 <h3 align="center">Simple Bash script for building android kernels!</h3>
 <br>
@@ -112,4 +112,5 @@ adb sideload AnyKernel3.zip
 - [KernelSU](https://github.com/tiann/KernelSU) - KernelSU
 - [Tiann](https://github.com/tiann) - KernelSU Patches
 - [AnyKernel3](https://github.com/osm0sis/AnyKernel3) - AnyKernel3
+- [hand7s aka s0me1newithhand7s])https://github.com/s0me1newithhand7s) - Idea of quick deployment, second README ittartion
 - [ShelbyHell](https://github.com/ShelbyHell)/[AOSPA](https://github.com/AOSPA) - helping with modify README, from AOSPA take more text :D
