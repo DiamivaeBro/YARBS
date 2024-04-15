@@ -31,10 +31,18 @@ Google recommends using [Ubuntu](http://www.ubuntu.com/download/desktop) for thi
 
 ## Grabbing the source
 
-[Repo](http://source.android.com/source/developing.html) is a tool provided by Google that simplifies using Git in the context of the Android source.
+[Repo](http://source.android.com/source/developing.html) is a tool provided by Google that simplifies using [Git](http://git-scm.com/book) in the context of the Android source.
 
 ```bash
-sudo apt-get install -y repo git
+# Make a directory where Repo will be stored and add it to the path
+mkdir ~/.bin
+PATH=~/.bin:$PATH
+
+# Download Repo itself
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+
+# Make Repo executable
+chmod a+x ~/.bin/repo
 ```
 
 Clone this repo to the home directory
