@@ -3,11 +3,11 @@
 <h3 align="center">Simple Bash Script for build Android Kernel!</h3>
 <br>
 <h2 align="center">▶️ Script features:</h2>
-  * Build standart kernel for Google Redbull family
-  * Build custom kernel for Google Redbull family (initial support)
-  * Build kernel with KSU  (Patch and Kprobes methods)
-  * Build kernel with APatch fixes
-  * Pack builded kernel into AnyKernel3
+    * Build standart kernel for Google Redbull family
+    * Build custom kernel for Google Redbull family (initial support)
+    * Build kernel with KSU  (Patch and Kprobes methods)
+    * Build kernel with APatch fixes
+    * Pack builded kernel into AnyKernel3
 <br>
 
 ## What in plans?
