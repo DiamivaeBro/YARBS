@@ -1,111 +1,103 @@
 <p align="center"><img src=https://github.com/DiamivaeBro/YARBS/assets/117505144/52106683-6a10-4f84-b26d-c10c627794d2></p>
 <h1 align="center">Yet Another Redbull Build Script (YARBS) 🦊</h1>
-<h3 align="center">Simple Bash Script for build Android Kernel!</h3>
+<h3 align="center">Simple bash script for building android kernels!</h3>
 <br>
 <h2 align="center">▶️ Script features:</h2>
-    * Build standart kernel for Google Redbull family
-    * Build custom kernel for Google Redbull family (initial support)
-    * Build kernel with KSU  (Patch and Kprobes methods)
-    * Build kernel with APatch fixes
-    * Pack builded kernel into AnyKernel3
-<br>
+
+- Build standart kernel for Google Redbull family
+- Build custom kernel for Google Redbull family (initial support)
+- Build kernel with KSU  (Patch and Kprobes methods)
+- Build kernel with APatch fixes
+- Pack builded kernel into AnyKernel3
+
+  <br>
+
 <h2 align="center">▶️ Future plans:</h2>
-    * Add support of build and patch kernels for most of android devices
-    * Make more flexible settings
-    * Add more avalible patches
-<br>
+
+- Add support of build and patch kernels for most of android devices
+- Make more flexible settings
+- Add more avalible patches
+
+  <br>
+
 <h1 align="center">⚠️ WE NOT RESPONSIBLE IF DEVICE BRICK OR BROKE. PROCEED AT YOUR OWN RISK.⚠️</h1>
 <h3>THIS SCRIPT IS IN EARLY TESTING AND MAY CAUSE DAMAGE TO YOUR DEVICE IF USED INAPPROPRIATE. CONSIDER ALL RISKS AND USE IT AT YOUR FULL RESPONSE.</h3>
 <h3>DO NOT OPEN NEW ISSUE IF YOU HAVE BRICKED DEVICE.</h3>
 <br>
-
+<br>
+<br>
 <h2 align="center">❔How to build?</h2>
 <p>
-You must be running a 64-bit Linux distribution and must have installed some packages to build Kernel.
-Google recommends using Ubuntu.
+
 </p>
-
-## Grabbing the source
-
-[Repo](http://source.android.com/source/developing.html) is a tool provided by Google that simplifies using [Git](http://git-scm.com/book) in the context of the Android source.
+<h2>Prepare pakages</h2>
 
 ```bash
-# Make a directory where Repo will be stored and add it to the path
-mkdir ~/.bin
-PATH=~/.bin:$PATH
-
-# Download Repo itself
-curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-
-# Make Repo executable
-chmod a+x ~/.bin/repo
+sudo apt-get install -y repo git
 ```
 
-Clone this repo to the home directory
+<h2>Clone this repo to the home directory</h2>
 
 ```bash
 git clone https://github.com/DiamivaeBro/YARBS.git
 ```
 
-Start script
+<h2>Start script</h2>
 
 ```bash
 ./$HOME/YARBS/build_ksu.sh
 ```
 
-Then answer for some qutions and build starts
+<h3>Then answer for some qutions and build starts</h3>
+<br>
 
-Results you can found in "AnyKernel3" and "out" directories in $HOME/android-kernel
+- Results you can found in "AnyKernel3" and "out" directories in $HOME/android-kernel
+- You can configure for what android version kernel you building, just change branch at script
+- Also in releases you can find prebuilded by me redbull kernels that includes KSU. A14 QPR1 ONLY
 
-You can configure for what android version kernel you building, just change branch at script
+---
 
-## Also in releases you can find prebuilded by me redbull kernels that includes KSU. A14 QPR1 ONLY
+<h2 align="center">❔ How to install? </h2>
+<h3>Download latest kernel form releases (boot.img for stock,AnyKernel3 for custom roms)</h3>
 
-How to install?
+<b align="center">1. For stock ROM:</b>
 
-Download latest kernel form releases (boot.img for stock, AnyKernel3 for custom roms)
+1. Unlock bootloader
 
-1. For stock ROM
+2. Reboot to bootloader
 
-1.1 Unlock bootloader
-
-1.2 Reboot to bootloader
-
-1.3 Flash boot.img
+3. Flash boot.img
 
 ```bash
 fastboot flash boot boot.img
 ```
 
-1.4 Boot to system
+4. Boot to system
 
-1.5 If it dont booted and ask to restore factory data you need to restore factory data
+5 If it dont booted and ask to restore factory data you need to restore factory data
 
-Congratulations! All might be okay
+<h3>Congratulations! All might be okay</h3>
 
-2. For custom ROM (Tested with [LineageOS](https://github.com/LineageOS) 21 may not work on others)
+<b align="center">2. For custom ROM (Tested with LinageOs 21 may not work on others)</b>
 
-2.1. Reboot to recovery
+1. Reboot to recovery
 
-2.2 Apply update
+2. Apply update
 
-2.3 Apply update from ADB
+3. Apply update from ADB
 
-2.4
+4. Complete installing
 
 ```bash
 adb sideload AnyKernel3.zip
 ```
 
-2.5 Reboot to system
+5. Reboot to system
 
-Congratulations! All might be okay
+<h3>Congratulations! All might be okay</h3>
+<br>
+<h1 align="center">▶️ Thanks to:</h1>
 
-## I AM NOT RESPONSIBLE IF DEVICE BRICK OR BROKE. PROCEED AT YOUR OWN RISK.
-
-## Thanks to:
-
-- [AOSPA](https://github.com/AOSPA/manifest/blob/uvite/README.md) - for base README.
 - [QKIvan](https://github.com/QKIvan) - For main logic of YARBS i refered to his worklow files
 - [xiaoleGun](https://github.com/xiaoleGun) - Script for patch kernel sources to support KernelSU
 - [Riko](https://codeberg.org/mikromikro) - Code refactoring
