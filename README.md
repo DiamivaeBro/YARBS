@@ -1,4 +1,4 @@
-![image](https://github.com/DiamivaeBro/YARBS/assets/117505144/b07a9f26-8ec3-414a-a346-82e606548843)<p align="center"><img src=https://github.com/DiamivaeBro/YARBS/assets/117505144/52106683-6a10-4f84-b26d-c10c627794d2></p>
+<p align="center"><img src=https://github.com/DiamivaeBro/YARBS/assets/117505144/52106683-6a10-4f84-b26d-c10c627794d2></p>
 <h1 align="center">Yet Another Redbull Build Script (YARBS) 🦊</h1>
 <h3 align="center">Simple Bash script for building android kernels!</h3>
 <br>
