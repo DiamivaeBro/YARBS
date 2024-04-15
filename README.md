@@ -26,7 +26,7 @@ Script really is not ideal and i need to rewrite some components. If you see any
 
 ## How to use?
 
-You need latest Ubuntu enviroment, you can use WSL (For windows) or Docker (Linux,Mac Os, Windows and etc.)
+You must be running a 64-bit Linux distribution and must have installed some packages to build Kerne. Google recommends using Ubuntu for this and provides instructions for setting up the system (with Ubuntu-specific commands) on the Android Open Source Project website.
 
 You need Ubuntu 20.04-23.04,
 
