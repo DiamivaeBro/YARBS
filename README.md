@@ -10,12 +10,10 @@
     * Pack builded kernel into AnyKernel3
 <br>
 <h2 align="center">▶️ Future plans:</h2>
-
-- Add support of build and patch kernels for most of android devices
-- Make more flexible settings
-- Add more avalible patches
-
-  <br>
+    * Add support of build and patch kernels for most of android devices
+    * Make more flexible settings
+    * Add more avalible patches
+<br>
 
 ## IT'S JUST ALPHA
 
