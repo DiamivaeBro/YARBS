@@ -34,7 +34,9 @@ Google recommends using Ubuntu.
 <h2>Setup machine</h2>
 
 ```bash
-sudo apt-get install -y repo git
+sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
+sudo chmod a+rx /usr/local/bin/repo
+sudo apt-get install -y curl bs flexgit
 ```
 
 <h2>Clone this repo to the home directory</h2>
