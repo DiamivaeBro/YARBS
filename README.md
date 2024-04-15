@@ -26,9 +26,8 @@ Script really is not ideal and i need to rewrite some components. If you see any
 
 ## How to use?
 
-You must be running a 64-bit Linux distribution and must have installed some packages to build Kerne. Google recommends using Ubuntu for this and provides instructions for setting up the system (with Ubuntu-specific commands) on the Android Open Source Project website.
-
-You need Ubuntu 20.04-23.04,
+You must be running a 64-bit Linux distribution and must have installed some packages to build Kernel.
+Google recommends using Ubuntu for this and provides instructions for setting up the system (with Ubuntu-specific commands) on [the Android Open Source Project website.](https://source.android.com/source/initializing.html#setting-up-a-linux-build-environment)
 
 Prepare pakages
 
