@@ -1,53 +1,54 @@
-Yet Another Redbull Build Script (YARBS)
--------------
+## Yet Another Redbull Build Script (YARBS)
 
 Simple bash script for building android kernels!
 
 For now script can
 
-* Build standart kernel for Google Redbull family
-* Build custom kernel for Google Redbull family (initial support)
-* Build kernel with KSU  (Patch and Kprobes methods)
-* Build kernel with APatch fixes
-* Pack builded kernel into AnyKernel3
-  
-What in plans?
--------------
+- Build standart kernel for Google Redbull family
+- Build custom kernel for Google Redbull family (initial support)
+- Build kernel with KSU  (Patch and Kprobes methods)
+- Build kernel with APatch fixes
+- Pack builded kernel into AnyKernel3
 
-* Add support of build and patch kernels for most of android devices
-* Make more flexible settings
-* Add more avalible patches
+## What in plans?
 
-IT'S JUST ALPHA
--------------
-Script really is not ideal and i need to rewrite some components.If you see any bugs, please report them on issues 
+- Add support of build and patch kernels for most of android devices
+- Make more flexible settings
+- Add more avalible patches
 
-How to use?
--------------
+## IT'S JUST ALPHA
+
+Script really is not ideal and i need to rewrite some components.If you see any bugs, please report them on issues
+
+## How to use?
 
 You need latest Ubuntu enviroment, you can use WSL (For windows) or Docker (Linux,Mac Os, Windows and etc.)
 
 Prepare pakages
+
 ```bash
 sudo apt-get install -y repo git
 ```
 
 Clone this repo to the home directory
+
 ```bash
 git clone https://github.com/DiamivaeBro/YARBS.git
 ```
+
 Start script
+
 ```bash
 ./$HOME/YARBS/build_ksu.sh
 ```
+
 Then answer for some qutions and build starts
 
 Results you can found in "AnyKernel3" and "out" directories in $HOME/android-kernel
 
 You can configure for what android version kernel you building, just change branch at script
 
-Also in releases you can find prebuilded by me redbull kernels that includes KSU. A14 QPR1 ONLY
--------------
+## Also in releases you can find prebuilded by me redbull kernels that includes KSU. A14 QPR1 ONLY
 
 How to install?
 
@@ -55,14 +56,16 @@ Download latest kernel form releases (boot.img for stock,AnyKernel3 for custom r
 
 1. For stock ROM
 
-1.1 Unlock bootloader 
+1.1 Unlock bootloader
 
 1.2 Reboot to bootloader
 
 1.3 Flash boot.img
+
 ```bash
 fastboot flash boot boot.img
 ```
+
 1.4 Boot to system
 
 1.5 If it dont booted and ask to restore factory data you need to restore factory data
@@ -75,9 +78,10 @@ Congratulations! All might be okay
 
 2.2 Apply update
 
-2.3 Apply update from ADB 
+2.3 Apply update from ADB
 
 2.4
+
 ```bash
 adb sideload AnyKernel3.zip
 ```
@@ -86,11 +90,10 @@ adb sideload AnyKernel3.zip
 
 Congratulations! All might be okay
 
-I AM NOT RESPONSIBLE IF DEVICE BRICK OR BROKE. PROCEED AT YOUR OWN RISK.
--------------
+## I AM NOT RESPONSIBLE IF DEVICE BRICK OR BROKE. PROCEED AT YOUR OWN RISK.
 
-Thanks to:
--------------
+## Thanks to:
+
 - [QKIvan](https://github.com/QKIvan) - For main logic of YARBS i refered to his worklow files
 - [xiaoleGun](https://github.com/xiaoleGun) - Script for patch kernel sources to support KernelSU
 - [Riko](https://codeberg.org/mikromikro) - Code refactoring
