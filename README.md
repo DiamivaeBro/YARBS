@@ -1,17 +1,15 @@
 <p align="center"><img src=https://github.com/DiamivaeBro/YARBS/assets/117505144/52106683-6a10-4f84-b26d-c10c627794d2></p>
 <h1 align="center">Yet Another Redbull Build Script (YARBS) 🦊</h1>
-
 <h3 align="center">Simple Bash Script for build Android Kernel!</h3>
 
-Script can build:
-
-```
-- Build standart kernel for Google Redbull family
-- Build custom kernel for Google Redbull family (initial support)
-- Build kernel with KSU  (Patch and Kprobes methods)
-- Build kernel with APatch fixes
-- Pack builded kernel into AnyKernel3
-```
+<br>
+<h2 align="center">▶️ Script features:</h2>
+  * Build standart kernel for Google Redbull family
+  * Build custom kernel for Google Redbull family (initial support)
+  * Build kernel with KSU  (Patch and Kprobes methods)
+  * Build kernel with APatch fixes
+  * Pack builded kernel into AnyKernel3
+<br>
 
 ## What in plans?
 
