@@ -28,6 +28,8 @@ Script really is not ideal and i need to rewrite some components. If you see any
 
 You need latest Ubuntu enviroment, you can use WSL (For windows) or Docker (Linux,Mac Os, Windows and etc.)
 
+You need Ubuntu 20.04-23.04,
+
 Prepare pakages
 
 ```bash
