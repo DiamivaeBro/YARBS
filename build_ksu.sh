@@ -5,6 +5,11 @@ KERNEL_DIR=$BUILD_HOME/android-kernel
 SOURCE_KERNEL_DIR=${KERNEL_DIR}/private/msm-google
 DEVICE_DEFCONFIG=arch/arm64/configs/redbull-gki_defconfig
 ARCH=arm64
+
+##### Need code-review from owner repo
+LOGGING=0
+#####
+
 # Making functions
 change_dir() {
 	cd $KERNEL_DIR
@@ -203,5 +208,15 @@ check_kernel_type
 select_kernel_patch
 save_defconfig
 sources_clean
-bash build_redbull-gki.sh
+
+##### Need code-review from owner repo
+if [ ${LOGGING} == "1" ]; then
+	echo "Build with logging to logcat.log"
+	bash build_redbull-gki.sh > logcat.log
+elif [ ${LOGGING} == "0" ]; then
+	echo "Build without logging"
+	bash build_redbull-gki.sh
+fi
+#####
+
 setup_anykernel_scripts
