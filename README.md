@@ -18,16 +18,12 @@
 <h3>THIS SCRIPT IS IN EARLY TESTING AND MAY CAUSE DAMAGE TO YOUR DEVICE IF USED INAPPROPRIATE. CONSIDER ALL RISKS AND USE IT AT YOUR FULL RESPONSE.</h3>
 <h3>DO NOT OPEN NEW ISSUE IF YOU HAVE BRICKED DEVICE.</h3>
 <br>
-<br>
-<br>
 
 <h2 align="center">❔How to build?</h2>
 <p>
-You need latest Ubuntu enviroment, you can use WSL (For windows) or Docker (Linux,Mac Os, Windows and etc.)
-</p>
-
 You must be running a 64-bit Linux distribution and must have installed some packages to build Kernel.
 Google recommends using [Ubuntu](http://www.ubuntu.com/download/desktop) for this and provides instructions for setting up the system (with Ubuntu-specific commands) on [the Android Open Source Project website.](https://source.android.com/source/initializing.html#setting-up-a-linux-build-environment)
+</p>
 
 ## Grabbing the source
 
