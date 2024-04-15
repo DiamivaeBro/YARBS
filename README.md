@@ -2,13 +2,16 @@
 
 Simple bash script for building android kernel!
 
-For now script can
+Script can build:
+\`\`
 
 - Build standart kernel for Google Redbull family
 - Build custom kernel for Google Redbull family (initial support)
 - Build kernel with KSU  (Patch and Kprobes methods)
 - Build kernel with APatch fixes
 - Pack builded kernel into AnyKernel3
+
+\`\`
 
 ## What in plans?
 
@@ -72,7 +75,7 @@ fastboot flash boot boot.img
 
 Congratulations! All might be okay
 
-2. For custom ROM (Tested with LineageOS(https://github.com/LineageOS) 21 may not work on others)
+2. For custom ROM (Tested with [LineageOS](https://github.com/LineageOS) 21 may not work on others)
 
 2.1. Reboot to recovery
 
