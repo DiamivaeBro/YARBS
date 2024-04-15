@@ -29,9 +29,9 @@
 <h2 align="center">❔How to build?</h2>
 <p>
 You must be running a 64-bit Linux distribution and must have installed some packages to build Kernel.
-Google recommends using [Ubuntu](http://www.ubuntu.com/download/desktop) for this and provides instructions for setting up the system (with Ubuntu-specific com
+Google recommends using Ubuntu.
 </p>
-<h2>Prepare pakages</h2>
+<h2>Setup machine</h2>
 
 ```bash
 sudo apt-get install -y repo git
