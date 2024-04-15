@@ -112,5 +112,5 @@ adb sideload AnyKernel3.zip
 - [KernelSU](https://github.com/tiann/KernelSU) - KernelSU
 - [Tiann](https://github.com/tiann) - KernelSU Patches
 - [AnyKernel3](https://github.com/osm0sis/AnyKernel3) - AnyKernel3
-- [hand7s aka s0me1newithhand7s])https://github.com/s0me1newithhand7s) - Idea of quick deployment, second README ittartion
+- [hand7s aka s0me1newithhand7s](https://github.com/s0me1newithhand7s) - Idea of quick deployment, second README ittartion
 - [ShelbyHell](https://github.com/ShelbyHell)/[AOSPA](https://github.com/AOSPA) - helping with modify README, from AOSPA take more text :D
