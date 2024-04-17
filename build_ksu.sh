@@ -196,6 +196,15 @@ setup_anykernel_scripts() {
 	zip -r AnyKernel3 . -x ".git*" -x "README.md" -x "*.zip"
 	echo "All done.Check $BUILD_HOME/android-kernel/AnyKernel"
 }
+build_log(){
+if [ ${LOGGING} == "1" ]; then
+	echo "Build with logging to logcat.log"
+	bash build_redbull-gki.sh > logcat.log
+elif [ ${LOGGING} == "0" ]; then
+	echo "Build without logging"
+	bash build_redbull-gki.sh
+fi
+}
 
 mkdir $HOME/builddir
 mkdir $KERNEL_DIR
@@ -208,15 +217,6 @@ check_kernel_type
 select_kernel_patch
 save_defconfig
 sources_clean
-
-##### Need code-review from owner repo
-if [ ${LOGGING} == "1" ]; then
-	echo "Build with logging to logcat.log"
-	bash build_redbull-gki.sh > logcat.log
-elif [ ${LOGGING} == "0" ]; then
-	echo "Build without logging"
-	bash build_redbull-gki.sh
-fi
-#####
+build_log
 
 setup_anykernel_scripts
