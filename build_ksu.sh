@@ -3,12 +3,9 @@
 BUILD_HOME=$HOME/builddir
 KERNEL_DIR=$BUILD_HOME/android-kernel
 SOURCE_KERNEL_DIR=${KERNEL_DIR}/private/msm-google
-DEVICE_DEFCONFIG=arch/arm64/configs/redbull-gki_defconfig
 ARCH=arm64
-
-##### Need code-review from owner repo
 LOGGING=0
-#####
+
 
 # Making functions
 change_dir() {
@@ -108,8 +105,8 @@ merge_ksu() {
 }
 
 merge_apatch() {
-	echo "CONFIG_KALLSYMS=y" >>arch/arm64/configs/redbull-gki_defconfig
-	echo "CONFIG_KALLSYMS_ALL=y" >>arch/arm64/configs/redbull-gki_defconfig
+	echo "CONFIG_KALLSYMS=y" >>$DEVICE_DEFCONFIG
+	echo "CONFIG_KALLSYMS_ALL=y" >>$DEVICE_DEFCONFIG
 	echo "Added Apatch support"
 
 }
@@ -169,10 +166,10 @@ check_kernel_type() {
 }
 
 save_defconfig() {
-	make redbull-gki_defconfig
+	make redbull"$GKI"_defconfig
 	make ARCH=arm64 savedefconfig
 	make mrproper
-	cp defconfig arch/arm64/configs/redbull-gki_defconfig
+	cp defconfig $DEVICE_DEFCONFIG
 }
 
 sources_clean() {
@@ -196,14 +193,26 @@ setup_anykernel_scripts() {
 	zip -r AnyKernel3 . -x ".git*" -x "README.md" -x "*.zip"
 	echo "All done.Check $BUILD_HOME/android-kernel/AnyKernel"
 }
+
 build_log(){
 if [ ${LOGGING} == "1" ]; then
 	echo "Build with logging to logcat.log"
-	bash build_redbull-gki.sh > logcat.log
+	bash build_redbull"$GKI".sh > logcat.log
 elif [ ${LOGGING} == "0" ]; then
 	echo "Build without logging"
-	bash build_redbull-gki.sh
+	bash build_redbull"$GKI".sh
 fi
+}
+
+ask_for_gki(){
+read -p "Do you need GKI (recomended for stock) y/n" AGKI
+if [ ${AGKI} == "y" ]; then
+GKI=-gki
+echo "Building GKI"
+elif [ ${AGKI} == "n" ]; then
+echo "Building without GKI"
+else ask_for_gki
+DEVICE_DEFCONFIG="$SOURCE_KERNEL_DIR"/arch/arm64/configs/redbull"$GKI"_defconfig
 }
 
 mkdir $HOME/builddir
@@ -212,11 +221,11 @@ cd $KERNEL_DIR
 update_system
 change_dir
 download_kernel_sources
+ask_for_gki
 select_kernel_type
 check_kernel_type
 select_kernel_patch
 save_defconfig
 sources_clean
 build_log
-
 setup_anykernel_scripts
