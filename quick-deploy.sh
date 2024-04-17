@@ -20,35 +20,16 @@ check () {
     fi
 }
 
-workdir () {
-    echo -e "\033[1;33mCreating workdir in /.\033[0m"
-    mkdir /workdir
-    chmod 777 /workdir/
-    chown root /workdir/
-    cd /workdir 
+localbuild () {
+    docker build --ulimit  --tag build  -f  YARBS/Dockerfile .
 }
 
-debootstarpping () {
-    echo -e "\033[1;33mAcquiring Base Ubuntu image.\033[0m"
-    debootstrap --arch=amd64 --no-check-certificate --no-check-gpg --include=git,systemd,systemd-container jammy /workdir http://mirror.yandex.ru/ubuntu/
-}
-
-cloning () {
-    mkdir -p /workdir/builddir
-    echo -e "\033[1;33mAcquiring script.\033[0m"
-    cp ./* /workdir/builddir
-}
-
-nspawn () {
-    echo -e "\033[1;33mNow we run systemd-nspawn:\033[0m"
-    systemd-nspawn -D /workdir /bin/bash -c 'export PATH="/usr/bin:$PATH"; bash build_ksu.sh'
-    umount -l /workdir
+runbuild() {
+    docker run build
 }
 
 greetings
 check
-workdir
-debootstarpping
-cloning
-nspawn
+localbuild
+runbuild
 echo -e "\033[1;33mDone!\033[0m"
