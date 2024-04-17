@@ -21,7 +21,7 @@ check () {
 }
 
 localbuild () {
-    docker build --ulimit  --tag build  -f  YARBS/Dockerfile .
+    docker build --tag build  -f  YARBS/Dockerfile .
 }
 
 runbuild() {
