@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 greetings () {
+    echo -e "    "
+    sleep 0.5;
     echo -e "\033[1;33m YY      YY   AAAAA      RRRRRR     BBBB       SSSS \033[0m"
     sleep 0.5;
     echo -e "\033[1;33m   YY  YY     AA  AA     RR    RR   BB  BB   SS    S\033[0m"
@@ -10,6 +12,7 @@ greetings () {
     echo -e "\033[1;33m     YY       AAAAAAAA   RR   RR    BB  BB   S    SS\033[0m"
     sleep 0.5;
     echo -e "\033[1;33m     YY       AA     AA  RR     RR  BBBBBB    SSSS  \033[0m"
+    echo -e "    "
     sleep 1;
 }
 
@@ -28,8 +31,16 @@ runbuild() {
     docker run build
 }
 
+goodbye() {
+    echo -e "    "
+    sleep 0.5;
+    echo -e "\033[1;33mDone!\033[0m"
+    echo -e "    "
+    sleep 1;
+}
+
 greetings
 check
 localbuild
 runbuild
-echo -e "\033[1;33mDone!\033[0m"
+goodbye
