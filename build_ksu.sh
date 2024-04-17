@@ -6,7 +6,6 @@ SOURCE_KERNEL_DIR=${KERNEL_DIR}/private/msm-google
 ARCH=arm64
 LOGGING=0
 
-
 # Making functions
 change_dir() {
 	cd $KERNEL_DIR
@@ -76,8 +75,9 @@ merge_ksu_kprobe() {
 }
 
 merge_ksu_patch() {
+	cd $SOURCE_KERNEL_DIR
 	echo "CONFIG_KSU=y" >>$DEVICE_DEFCONFIG
-	bash $BUILD_HOME/YARBS/patches.sh
+	bash $HOME/YARBS/patches.sh
 }
 
 check_ksu_patch_type() {
@@ -94,7 +94,7 @@ check_ksu_patch_type() {
 }
 
 merge_ksu() {
-	cd ${SOURCE_KERNEL_DIR}
+	cd $SOURCE_KERNEL_DIR
 	if [ ! -f "KernelSU/justfile" ]; then
 		curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 		check_ksu_patch_type
@@ -194,27 +194,30 @@ setup_anykernel_scripts() {
 	echo "All done.Check $BUILD_HOME/android-kernel/AnyKernel"
 }
 
-build_log(){
-if [ ${LOGGING} == "1" ]; then
-	echo "Build with logging to logcat.log"
-	bash build_redbull"$GKI".sh > logcat.log
-elif [ ${LOGGING} == "0" ]; then
-	echo "Build without logging"
-	bash build_redbull"$GKI".sh
-fi
+build_log() {
+	if [ ${LOGGING} == "1" ]; then
+		echo "Build with logging to logcat.log"
+		bash build_redbull"$GKI".sh >logcat.log
+	elif [ ${LOGGING} == "0" ]; then
+		echo "Build without logging"
+		bash build_redbull"$GKI".sh
+	fi
 }
 
-ask_for_gki(){
-read -p "Do you need GKI (recomended for stock) y/n" AGKI
-if [ ${AGKI} == "y" ]; then
-GKI=-gki
-echo "Building GKI"
-elif [ ${AGKI} == "n" ]; then
-echo "Building without GKI"
-else ask_for_gki
-DEVICE_DEFCONFIG="$SOURCE_KERNEL_DIR"/arch/arm64/configs/redbull"$GKI"_defconfig
+ask_for_gki() {
+	read -p "Do you need GKI (recomended for stock) y/n" AGKI
+	if [ ${AGKI} == "y" ]; then
+		GKI=-gki
+		echo "Building GKI"
+	elif [ ${AGKI} == "n" ]; then
+		echo "Building without GKI"
+	else
+		ask_for_gki
+	fi
+	DEVICE_DEFCONFIG="$SOURCE_KERNEL_DIR"/arch/arm64/configs/redbull"$GKI"_defconfig
 }
 
+###Starting script
 mkdir $HOME/builddir
 mkdir $KERNEL_DIR
 cd $KERNEL_DIR
