@@ -24,6 +24,7 @@ check () {
 }
 
 localbuild () {
+    mkdir -p workdir
     docker build --tag build  -f  YARBS/Dockerfile .
 }
 
