@@ -3,6 +3,7 @@
 BUILD_HOME=$HOME/builddir
 KERNEL_DIR=$BUILD_HOME/android-kernel
 SOURCE_KERNEL_DIR=${KERNEL_DIR}/private/msm-google
+DEVICE_DEFCONFIG=${SOURCE_KERNEL_DIR}/arch/arm64/configs/redbull_defconfig
 ARCH=arm64
 LOGGING=0
 
@@ -182,10 +183,10 @@ check_kernel_type() {
 }
 
 save_defconfig() {
-	make redbull"$GKI"_defconfig
+	make redbull ${DEVICE_DEFCONFIG}
 	make ARCH=arm64 savedefconfig
 	make mrproper
-	cp defconfig $DEVICE_DEFCONFIG
+	cp defconfig ${SOURCE_KERNEL_DIR}/arch/arm64/configs/defconfig
 }
 
 sources_clean() {
@@ -213,10 +214,10 @@ setup_anykernel_scripts() {
 build_log() {
 	if [ ${LOGGING} == "1" ]; then
 		echo "Build with logging to logcat.log"
-		bash build_redbull"$GKI".sh >logcat.log
+		bash build_redbull${GKI}.sh >logcat.log
 	elif [ ${LOGGING} == "0" ]; then
 		echo "Build without logging"
-		bash build_redbull"$GKI".sh
+		bash build_redbull${GKI}.sh
 	fi
 }
 
@@ -230,7 +231,6 @@ ask_for_gki() {
 	else
 		ask_for_gki
 	fi
-	DEVICE_DEFCONFIG="$SOURCE_KERNEL_DIR"/arch/arm64/configs/redbull"$GKI"_defconfig
 }
 
 ###Starting script
