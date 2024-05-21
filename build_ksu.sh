@@ -8,24 +8,20 @@ ARCH=arm64
 LOGGING=0
 
 # Making functions
-greetings () {
-    echo -e "    "
-    sleep 0.5;
-    echo -e "\033[1;33m YY      YY   AAAAA      RRRRRR     BBBB       SSSS \033[0m"
-    sleep 0.5;
-    echo -e "\033[1;33m   YY  YY     AA  AA     RR    RR   BB  BB   SS    S\033[0m"
-    sleep 0.5;
-    echo -e "\033[1;33m     YY       AA   AA    RRRRRR     BBBB       SSS  \033[0m"
-    sleep 0.5;
-    echo -e "\033[1;33m     YY       AAAAAAAA   RR   RR    BB  BB   S    SS\033[0m"
-    sleep 0.5;
-    echo -e "\033[1;33m     YY       AA     AA  RR     RR  BBBBBB    SSSS  \033[0m"
-    echo -e "    "
-    sleep 1;
-}
-
-change_dir() {
-	cd $KERNEL_DIR
+greetings() {
+	echo -e "    "
+	sleep 0.5
+	echo -e "\033[1;33m YY      YY   AAAAA      RRRRRR     BBBB       SSSS \033[0m"
+	sleep 0.5
+	echo -e "\033[1;33m   YY  YY     AA  AA     RR    RR   BB  BB   SS    S\033[0m"
+	sleep 0.5
+	echo -e "\033[1;33m     YY       AA   AA    RRRRRR     BBBB       SSS  \033[0m"
+	sleep 0.5
+	echo -e "\033[1;33m     YY       AAAAAAAA   RR   RR    BB  BB   S    SS\033[0m"
+	sleep 0.5
+	echo -e "\033[1;33m     YY       AA     AA  RR     RR  BBBBBB    SSSS  \033[0m"
+	echo -e "    "
+	sleep 1
 }
 
 select_kernel_type() {
@@ -146,15 +142,37 @@ update_system() {
 	sudo apt-get install libssl-dev repo git systemtap gcc
 }
 
-download_kernel_sources() {
-	if [ ! -f private/msm-google/AndroidKernel.mk ]; then
-		echo "Downloading sources..."
-		rm -rf "$KERNEL_DIR/.repo"
-		repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-redbull-4.19-android14-qpr1
-		repo sync -j $(nproc)
-		touch $SOURCE_KERNEL_DIR/stock
+install_buildroot() {
+	if [ ! -d builddir/android-kernel ]; then
+		echo "Downloading buildroot..."
+		git clone https://github.com/DiamivaeBro/YARBS_BuildRoot.git $KERNEL_DIR
+	else
+		echo "Buildroot alredy downloaded!"
+	fi
+	if [ ! -d kernel-buildroot/prebuilds-mater/misc/common/ ]; then
+		wget https://github.com/DiamivaeBro/YARBS_BuildRoot/releases/download/1/robolectric.zip
+		unzip robolectric.zip $KERNEL_DIR/prebuilds-mater/misc/common
+		rm -rf robolectric.zip
 	else
 		echo ""
+	fi
+	if [ ! -d kernel-buildroot/prebuilds-mater/clang ]; then
+		echo "Downloading clang..."
+		git clone https://github.com/DiamivaeBro/YARBS_Clang.git $KERNEL_DIR/prebuilds-mater/clang
+	else
+		echo "Clang already downloaded!"
+	fi
+	cd $KERNEL_DIR
+}
+
+stock_kernel_merge() {
+	if [ ! -f $SOURCE_KERNEL_DIR/stock ]; then
+		git clone https://github.com/DiamivaeBro/andreoid_redbull_kernel_stock.git $KERNEL_DIR/private/msm-google
+		touch $SOURCE_KERNEL_DIR/stock
+	elif [ $KERNEL_DIR/private/msm-google-stock ]; then 
+	mv $KERNEL_DIR/private/msm-google-stock $KERNEL_DIR/private/msm-google
+	else
+		echo "You already have stock kernel sources!"
 	fi
 }
 
@@ -173,7 +191,7 @@ custom_kernel_merge() {
 
 check_kernel_type() {
 	if [ ${KERNEL_TYPE} == "stock" ]; then
-		echo "Building stock"
+		stock_kernel_merge
 	elif [ ${KERNEL_TYPE} == "custom" ]; then
 		custom_kernel_merge
 	else
@@ -236,11 +254,8 @@ ask_for_gki() {
 ###Starting script
 greetings
 mkdir $HOME/builddir
-mkdir $KERNEL_DIR
-cd $KERNEL_DIR
 update_system
-change_dir
-download_kernel_sources
+install_buildroot
 ask_for_gki
 select_kernel_type
 check_kernel_type
