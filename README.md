@@ -4,18 +4,18 @@
 <br>
 <h2 align="center">▶️ Script features:</h2>
 
-- Build standart/custom kernel for Google Redbull family
-- Build kernel with KernelSU (patches and kprobes methods)
-- Build kernel with APatch fixes
-- Pack builded kernel into AnyKernel3
+- [x] Build standart/custom kernel for Google Redbull family
+- [x] Build kernel with KernelSU (patches and kprobes methods)
+- [x] Build kernel with APatch fixes
+- [x] Pack builded kernel into AnyKernel3
 
   <br>
 
 <h2 align="center">▶️ Future plans:</h2>
 
-- Add support of build and patch kernels for most of android devices
-- Make more flexible settings
-  - Add more avalible patches
+- [ ] Add support of build and patch kernels for most of android devices
+- [ ]  Make more flexible settings
+  - [ ] Add more avalible patches
 
     <br>
 
