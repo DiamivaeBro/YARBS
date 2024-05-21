@@ -35,6 +35,10 @@
 You must be running a 64-bit Linux distribution and must have installed some packages to build Kernel.
 Google recommends using Ubuntu.
 </p>
+<p>
+  
+Or you can use our [FTBE](https://github.com/FoxTail-Groupe/FTBE)!
+</p>
 <h2>Setup machine</h2>
 
 ```bash
