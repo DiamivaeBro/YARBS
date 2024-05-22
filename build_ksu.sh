@@ -25,7 +25,7 @@ greetings() {
 }
 
 select_kernel_type() {
-	read -p "What kernel do you want to build? (stock/custom)" KERNEL_TYPE
+	read -p "What kernel do you want to build? (stock/custom) " KERNEL_TYPE
 }
 
 select_kernel_patch() {
@@ -143,22 +143,26 @@ update_system() {
 }
 
 install_buildroot() {
-	if [ ! -d builddir/android-kernel ]; then
+	if [ ! -d $KERNEL_DIR ]; then
 		echo "Downloading buildroot..."
 		git clone https://github.com/DiamivaeBro/YARBS_BuildRoot.git $KERNEL_DIR
 	else
 		echo "Buildroot alredy downloaded!"
 	fi
-	if [ ! -d kernel-buildroot/prebuilds-mater/misc/common/ ]; then
-		wget https://github.com/DiamivaeBro/YARBS_BuildRoot/releases/download/1/robolectric.zip
-		unzip robolectric.zip $KERNEL_DIR/prebuilds-mater/misc/common
+	if [ ! -d $KERNEL_DIR/prebuilts-master/misc/common/robolectric ]; then
+		if [ ! -f robolectric.zip ]; then
+			wget https://github.com/DiamivaeBro/YARBS_BuildRoot/releases/download/1/robolectric.zip
+			unzip robolectric.zip -d $KERNEL_DIR/prebuilts-master/misc/common
+		else
+			echo ""
+		fi
 		rm -rf robolectric.zip
 	else
 		echo ""
 	fi
-	if [ ! -d kernel-buildroot/prebuilds-mater/clang ]; then
+	if [ ! -d $KERNEL_DIR/prebuilts-master/clang ]; then
 		echo "Downloading clang..."
-		git clone https://github.com/DiamivaeBro/YARBS_Clang.git $KERNEL_DIR/prebuilds-mater/clang
+		git clone https://github.com/DiamivaeBro/YARBS_Clang.git $KERNEL_DIR/prebuilts-master/clang
 	else
 		echo "Clang already downloaded!"
 	fi
@@ -167,10 +171,10 @@ install_buildroot() {
 
 stock_kernel_merge() {
 	if [ ! -f $SOURCE_KERNEL_DIR/stock ]; then
-		git clone https://github.com/DiamivaeBro/andreoid_redbull_kernel_stock.git $KERNEL_DIR/private/msm-google
+		git clone https://github.com/DiamivaeBro/android_kernel_redfin_stock.git $KERNEL_DIR/private/msm-google
 		touch $SOURCE_KERNEL_DIR/stock
-	elif [ $KERNEL_DIR/private/msm-google-stock ]; then 
-	mv $KERNEL_DIR/private/msm-google-stock $KERNEL_DIR/private/msm-google
+	elif [ -d $KERNEL_DIR/private/msm-google-stock ]; then
+		mv $KERNEL_DIR/private/msm-google-stock $KERNEL_DIR/private/msm-google
 	else
 		echo "You already have stock kernel sources!"
 	fi
@@ -240,7 +244,7 @@ build_log() {
 }
 
 ask_for_gki() {
-	read -p "Do you need GKI (recomended for stock) y/n" AGKI
+	read -p "Do you need GKI (recomended for stock) y/n " AGKI
 	if [ ${AGKI} == "y" ]; then
 		GKI=-gki
 		echo "Building GKI"
