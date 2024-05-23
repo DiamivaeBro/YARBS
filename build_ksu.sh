@@ -152,10 +152,10 @@ install_buildroot() {
 	if [ ! -d $KERNEL_DIR/prebuilts-master/misc/common/robolectric ]; then
 		if [ ! -f robolectric.zip ]; then
 			wget https://github.com/DiamivaeBro/YARBS_BuildRoot/releases/download/1/robolectric.zip
-			unzip robolectric.zip -d $KERNEL_DIR/prebuilts-master/misc/common
 		else
 			echo ""
 		fi
+		unzip robolectric.zip -d $KERNEL_DIR/prebuilts-master/misc/common
 		rm -rf robolectric.zip
 	else
 		echo ""
@@ -181,8 +181,8 @@ stock_kernel_merge() {
 }
 
 custom_kernel_merge() {
-	if [ -f msm-google/stock ]; then
-		mv msm-google msm-google_stock
+	if [ -f $SOURCE_KERNEL_DIR/stock ]; then
+		mv $KERNEL_DIR/private/msm-google $KERNEL_DIR/private/msm-google_stock
 	else
 		echo ""
 	fi
@@ -191,6 +191,22 @@ custom_kernel_merge() {
 	read -p "Enter branch name: " KBRANCH
 	git clone "$KGIT" $SOURCE_KERNEL_DIR -b "$KBRANCH"
 	cd $KERNEL_DIR
+	disable_chekdefconfig
+}
+
+disable_chekdefconfig() {
+	echo "Disabling check_defconfig function"
+	if [ ${AGKI} == "y" ]; then
+		BUILDCONFIG=$SOURCE_KERNEL_DIR/build.config.redbull.vintf
+	else
+		BUILDCONFIG=$SOURCE_KERNEL_DIR/build.config.redbull.no-cfi
+	fi
+	DISSAVEDEFCONF=$(cat $BUILDCONFIG | grep -wo check_defconfig)
+	if [ ${DISSAVEDEFCONF} == "check_defconfig" ]; then
+		sed -i "s/check_defconfig && update_config/update_config/" $BUILDCONFIG
+	else
+		echo "check_defconfig function already disabled"
+	fi
 }
 
 check_kernel_type() {
