@@ -138,8 +138,12 @@ check_kernel_patch() {
 }
 
 update_system() {
-	sudo apt-get update -y
-	sudo apt-get install libssl-dev repo git systemtap gcc
+	if [ ${FTBE} == "y" ]; then
+		sudo apt-get update -y
+		sudo apt-get install libssl-dev repo git systemtap gcc flex
+	else
+		echo ""
+	fi
 }
 
 install_buildroot() {
@@ -195,7 +199,7 @@ custom_kernel_merge() {
 }
 
 disable_chekdefconfig() {
-	echo "Disabling check_defconfig function"
+	echo "Disabling check_defconfig function..."
 	if [ ${AGKI} == "y" ]; then
 		BUILDCONFIG=$SOURCE_KERNEL_DIR/build.config.redbull.vintf
 	else
