@@ -194,7 +194,7 @@ custom_kernel_merge() {
 	read -p "Enter link to sources: " KGIT
 	read -p "Enter branch name: " KBRANCH
 	git clone "$KGIT" $SOURCE_KERNEL_DIR -b "$KBRANCH"
-	cd $KERNEL_DIR
+	cd $SOURCE_KERNEL_DIR
 	disable_chekdefconfig
 }
 
@@ -207,9 +207,11 @@ disable_chekdefconfig() {
 	fi
 	DISSAVEDEFCONF=$(cat $BUILDCONFIG | grep -wo check_defconfig)
 	if [ ${DISSAVEDEFCONF} == "check_defconfig" ]; then
-		sed -i "s/check_defconfig && update_config/update_config/" $BUILDCONFIG
+		sed -i "s/check_defconfig//" $BUILDCONFIG
+		sed -i "3 s/&&//" $BUILDCONFIG
+
 	else
-		echo "check_defconfig function already disabled"
+		echo "check_defconfig function already disabled!"
 	fi
 }
 
