@@ -1,16 +1,31 @@
 #!/usr/bin/env bash
 # Preparing variables
-KERNEL_DIR=$HOME/android-kernel
+BUILD_HOME=$HOME/builddir
+KERNEL_DIR=$BUILD_HOME/android-kernel
 SOURCE_KERNEL_DIR=${KERNEL_DIR}/private/msm-google
-DEVICE_DEFCONFIG=arch/arm64/configs/redbull-gki_defconfig
+DEVICE_DEFCONFIG=${SOURCE_KERNEL_DIR}/arch/arm64/configs/redbull_defconfig
 ARCH=arm64
+LOGGING=0
+
 # Making functions
-change_dir() {
-	cd $KERNEL_DIR
+greetings() {
+	echo -e "    "
+	sleep 0.5
+	echo -e "\033[1;33m YY      YY   AAAAA      RRRRRR     BBBB       SSSS \033[0m"
+	sleep 0.5
+	echo -e "\033[1;33m   YY  YY     AA  AA     RR    RR   BB  BB   SS    S\033[0m"
+	sleep 0.5
+	echo -e "\033[1;33m     YY       AA   AA    RRRRRR     BBBB       SSS  \033[0m"
+	sleep 0.5
+	echo -e "\033[1;33m     YY       AAAAAAAA   RR   RR    BB  BB   S    SS\033[0m"
+	sleep 0.5
+	echo -e "\033[1;33m     YY       AA     AA  RR     RR  BBBBBB    SSSS  \033[0m"
+	echo -e "    "
+	sleep 1
 }
 
 select_kernel_type() {
-	read -p "What kernel do you want to build? (stock/custom)" KERNEL_TYPE
+	read -p "What kernel do you want to build? (stock/custom) " KERNEL_TYPE
 }
 
 select_kernel_patch() {
@@ -73,6 +88,7 @@ merge_ksu_kprobe() {
 }
 
 merge_ksu_patch() {
+	cd $SOURCE_KERNEL_DIR
 	echo "CONFIG_KSU=y" >>$DEVICE_DEFCONFIG
 	bash $HOME/YARBS/patches.sh
 }
@@ -91,7 +107,7 @@ check_ksu_patch_type() {
 }
 
 merge_ksu() {
-	cd ${SOURCE_KERNEL_DIR}
+	cd $SOURCE_KERNEL_DIR
 	if [ ! -f "KernelSU/justfile" ]; then
 		curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 		check_ksu_patch_type
@@ -102,8 +118,8 @@ merge_ksu() {
 }
 
 merge_apatch() {
-	echo "CONFIG_KALLSYMS=y" >>arch/arm64/configs/redbull-gki_defconfig
-	echo "CONFIG_KALLSYMS_ALL=y" >>arch/arm64/configs/redbull-gki_defconfig
+	echo "CONFIG_KALLSYMS=y" >>$DEVICE_DEFCONFIG
+	echo "CONFIG_KALLSYMS_ALL=y" >>$DEVICE_DEFCONFIG
 	echo "Added Apatch support"
 
 }
@@ -122,25 +138,55 @@ check_kernel_patch() {
 }
 
 update_system() {
-	sudo apt-get update -y
-	sudo apt-get install libssl-dev repo git systemtap gcc
-}
-
-download_kernel_sources() {
-	if [ ! -f private/msm-google/AndroidKernel.mk ]; then
-		echo "Downloading sources..."
-		rm -rf "$KERNEL_DIR/.repo"
-		repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-redbull-4.19-android14-qpr1
-		repo sync -j $(nproc)
-		touch $SOURCE_KERNEL_DIR/stock
+	if [ ${FTBE} == "y" ]; then
+		sudo apt-get update -y
+		sudo apt-get install libssl-dev repo git systemtap gcc flex
 	else
 		echo ""
 	fi
 }
 
+install_buildroot() {
+	if [ ! -d $KERNEL_DIR ]; then
+		echo "Downloading buildroot..."
+		git clone https://github.com/DiamivaeBro/YARBS_BuildRoot.git $KERNEL_DIR
+	else
+		echo "Buildroot alredy downloaded!"
+	fi
+	if [ ! -d $KERNEL_DIR/prebuilts-master/misc/common/robolectric ]; then
+		if [ ! -f robolectric.zip ]; then
+			wget https://github.com/DiamivaeBro/YARBS_BuildRoot/releases/download/1/robolectric.zip
+		else
+			echo ""
+		fi
+		unzip robolectric.zip -d $KERNEL_DIR/prebuilts-master/misc/common
+		rm -rf robolectric.zip
+	else
+		echo ""
+	fi
+	if [ ! -d $KERNEL_DIR/prebuilts-master/clang ]; then
+		echo "Downloading clang..."
+		git clone https://github.com/DiamivaeBro/YARBS_Clang.git $KERNEL_DIR/prebuilts-master/clang
+	else
+		echo "Clang already downloaded!"
+	fi
+	cd $KERNEL_DIR
+}
+
+stock_kernel_merge() {
+	if [ ! -f $SOURCE_KERNEL_DIR/stock ]; then
+		git clone https://github.com/DiamivaeBro/android_kernel_redfin_stock.git $KERNEL_DIR/private/msm-google
+		touch $SOURCE_KERNEL_DIR/stock
+	elif [ -d $KERNEL_DIR/private/msm-google-stock ]; then
+		mv $KERNEL_DIR/private/msm-google-stock $KERNEL_DIR/private/msm-google
+	else
+		echo "You already have stock kernel sources!"
+	fi
+}
+
 custom_kernel_merge() {
-	if [ -f msm-google/stock ]; then
-		mv msm-google msm-google_stock
+	if [ -f $SOURCE_KERNEL_DIR/stock ]; then
+		mv $KERNEL_DIR/private/msm-google $KERNEL_DIR/private/msm-google_stock
 	else
 		echo ""
 	fi
@@ -149,11 +195,27 @@ custom_kernel_merge() {
 	read -p "Enter branch name: " KBRANCH
 	git clone "$KGIT" $SOURCE_KERNEL_DIR -b "$KBRANCH"
 	cd $KERNEL_DIR
+	disable_chekdefconfig
+}
+
+disable_chekdefconfig() {
+	echo "Disabling check_defconfig function..."
+	if [ ${AGKI} == "y" ]; then
+		BUILDCONFIG=$SOURCE_KERNEL_DIR/build.config.redbull.vintf
+	else
+		BUILDCONFIG=$SOURCE_KERNEL_DIR/build.config.redbull.no-cfi
+	fi
+	DISSAVEDEFCONF=$(cat $BUILDCONFIG | grep -wo check_defconfig)
+	if [ ${DISSAVEDEFCONF} == "check_defconfig" ]; then
+		sed -i "s/check_defconfig && update_config/update_config/" $BUILDCONFIG
+	else
+		echo "check_defconfig function already disabled"
+	fi
 }
 
 check_kernel_type() {
 	if [ ${KERNEL_TYPE} == "stock" ]; then
-		echo "Building stock"
+		stock_kernel_merge
 	elif [ ${KERNEL_TYPE} == "custom" ]; then
 		custom_kernel_merge
 	else
@@ -163,18 +225,18 @@ check_kernel_type() {
 }
 
 save_defconfig() {
-	make redbull-gki_defconfig
+	make redbull ${DEVICE_DEFCONFIG}
 	make ARCH=arm64 savedefconfig
 	make mrproper
-	cp defconfig arch/arm64/configs/redbull-gki_defconfig
+	cp defconfig ${SOURCE_KERNEL_DIR}/arch/arm64/configs/defconfig
 }
 
 sources_clean() {
 	cd $KERNEL_DIR
-	if [ -f $HOME/android-kernel/out ]; then
+	if [ -f $KERNEL_DIR/out ]; then
 		rm -rf "out"
 	fi
-	if [ -f $HOME/android-kernel/AnyKernel3 ]; then
+	if [ -f $KERNEL_DIR/AnyKernel3 ]; then
 		rm -rf "AnyKernel3"
 	fi
 }
@@ -185,21 +247,44 @@ setup_anykernel_scripts() {
 	sed -i 's/do.devicecheck=1/do.devicecheck=0/g' AnyKernel3/anykernel.sh
 	sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' AnyKernel3/anykernel.sh
 	sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' AnyKernel3/anykernel.sh
-	cp $HOME/android-kernel/out/android-msm-pixel-4.19/dist/Image.lz4-dtb AnyKernel3/
+	cp $BUILD_HOME/android-kernel/out/android-msm-pixel-4.19/dist/Image.lz4-dtb AnyKernel3/
 	cd ./AnyKernel3/
 	zip -r AnyKernel3 . -x ".git*" -x "README.md" -x "*.zip"
-	echo "All done.Check $HOME/android-kernel/AnyKernel"
+	echo "All done.Check $BUILD_HOME/android-kernel/AnyKernel"
 }
 
-mkdir $KERNEL_DIR
-cd $KERNEL_DIR
+build_log() {
+	if [ ${LOGGING} == "1" ]; then
+		echo "Build with logging to logcat.log"
+		bash build_redbull${GKI}.sh >logcat.log
+	elif [ ${LOGGING} == "0" ]; then
+		echo "Build without logging"
+		bash build_redbull${GKI}.sh
+	fi
+}
+
+ask_for_gki() {
+	read -p "Do you need GKI (recomended for stock) y/n " AGKI
+	if [ ${AGKI} == "y" ]; then
+		GKI=-gki
+		echo "Building GKI"
+	elif [ ${AGKI} == "n" ]; then
+		echo "Building without GKI"
+	else
+		ask_for_gki
+	fi
+}
+
+###Starting script
+greetings
+mkdir $HOME/builddir
 update_system
-change_dir
-download_kernel_sources
+install_buildroot
+ask_for_gki
 select_kernel_type
 check_kernel_type
 select_kernel_patch
 save_defconfig
 sources_clean
-bash build_redbull-gki.sh
+build_log
 setup_anykernel_scripts
