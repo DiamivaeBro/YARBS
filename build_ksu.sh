@@ -140,7 +140,7 @@ check_kernel_patch() {
 update_system() {
 	if [ ${FTBE} == "y" ]; then
 		sudo apt-get update -y
-		sudo apt-get install libssl-dev repo git systemtap gcc flex
+		sudo apt-get install libssl-dev git systemtap gcc flex
 	else
 		echo ""
 	fi
@@ -152,17 +152,6 @@ install_buildroot() {
 		git clone https://github.com/DiamivaeBro/YARBS_BuildRoot.git $KERNEL_DIR
 	else
 		echo "Buildroot alredy downloaded!"
-	fi
-	if [ ! -d $KERNEL_DIR/prebuilts-master/misc/common/robolectric ]; then
-		if [ ! -f robolectric.zip ]; then
-			wget https://github.com/DiamivaeBro/YARBS_BuildRoot/releases/download/1/robolectric.zip
-		else
-			echo ""
-		fi
-		unzip robolectric.zip -d $KERNEL_DIR/prebuilts-master/misc/common
-		rm -rf robolectric.zip
-	else
-		echo ""
 	fi
 	if [ ! -d $KERNEL_DIR/prebuilts-master/clang ]; then
 		echo "Downloading clang..."
@@ -182,6 +171,8 @@ stock_kernel_merge() {
 	else
 		echo "You already have stock kernel sources!"
 	fi
+	cd $SOURCE_KERNEL_DIR
+
 }
 
 custom_kernel_merge() {
@@ -227,7 +218,7 @@ check_kernel_type() {
 }
 
 save_defconfig() {
-	make redbull ${DEVICE_DEFCONFIG}
+	make ARCH=arm64 ${DEVICE_DEFCONFIG}
 	make ARCH=arm64 savedefconfig
 	make mrproper
 	cp defconfig ${SOURCE_KERNEL_DIR}/arch/arm64/configs/defconfig
@@ -235,11 +226,11 @@ save_defconfig() {
 
 sources_clean() {
 	cd $KERNEL_DIR
-	if [ -f $KERNEL_DIR/out ]; then
-		rm -rf "out"
+	if [ -d $KERNEL_DIR/out ]; then
+		rm -rf out
 	fi
-	if [ -f $KERNEL_DIR/AnyKernel3 ]; then
-		rm -rf "AnyKernel3"
+	if [ -d $KERNEL_DIR/AnyKernel3 ]; then
+		rm -rf AnyKernel3
 	fi
 }
 
