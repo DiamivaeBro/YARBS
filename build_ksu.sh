@@ -171,6 +171,7 @@ stock_kernel_merge() {
 	else
 		echo "You already have stock kernel sources!"
 	fi
+	disable_chekdefconfig
 	cd $SOURCE_KERNEL_DIR
 
 }
@@ -247,6 +248,7 @@ setup_anykernel_scripts() {
 }
 
 build_log() {
+	cd $KERNEL_DIR
 	if [ ${LOGGING} == "1" ]; then
 		echo "Build with logging to logcat.log"
 		bash build_redbull${GKI}.sh >logcat.log
